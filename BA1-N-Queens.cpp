@@ -28,6 +28,11 @@ public:
                 this->board[i][j] = '-';
         }
     }
+    int getsize()
+    {
+        return boardSize;
+    }
+
     //Destructor
     ~Board() {
         for (int i = 0; i < boardSize; i++)
@@ -45,13 +50,43 @@ public:
 };
 class Queens
 {
-private: 
+private:
     int RowPos, ColPos;
+    int BoardSize;
 public:
+    Board Ava;
     Queens()
     {
-        
-    }     
+        BoardSize = Ava.getsize();
+
+
+    }
+    bool Availability(int board[])
+    {
+        for (int i = 0; i < BoardSize; i++)
+        {
+            RowPos = board[i];
+            if (RowPos)
+            {
+                return false;
+            }
+
+        }
+        for (int i = 0; i < BoardSize; i++)
+        {
+            for (int j = 0; j < BoardSize; j++)
+            {
+                ColPos = board[i][j];
+                if (ColPos)
+                {
+
+                }
+            }
+        }
+
+
+    }
+
 };
 
 int main()
@@ -83,5 +118,5 @@ int main()
     delete[] board
 
     return 0; */
-
 }
+
