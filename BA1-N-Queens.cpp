@@ -43,6 +43,16 @@ public:
         }
     }
 };
+class Queens
+{
+private: 
+    int RowPos, ColPos;
+public:
+    Queens()
+    {
+        
+    }     
+};
 
 int main()
 {
