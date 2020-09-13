@@ -3,65 +3,39 @@
 
 using namespace std;
 
-class Board {
-private:
-    int boardSize;
-    char** board;
-public:
-    //Constructors
-    Board() {
-        board = new char* [boardSize];
-        for (int i = 0; i < boardSize; i++)
-            board[i] = new char[boardSize];
-        for (int i = 0; i < this->boardSize; i++) {
-            for (int j = 0; j < boardSize; j++)
-                board[i][j] = '-';
-        }
-    }
-    Board(int boardSize) {
-        this->boardSize = boardSize;
-        board = new char* [boardSize];
-        for (int i = 0; i < boardSize; i++)
-            board[i] = new char[boardSize];
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++)
-                this->board[i][j] = '-';
-        }
-    }
-    int getsize()
-    {
-        return boardSize;
-    }
-
-    //Destructor
-    ~Board() {
-        for (int i = 0; i < boardSize; i++)
-            delete[] board[i];
-        delete[] board;
-    }
-    void print_board() {
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                std::cout << board[i][j] << "|";
-            }
-            std::cout << "\n";
-        }
-    }
-};
 class Queens
 {
 private:
     int RowPos, ColPos;
     int BoardSize;
 public:
-    Board Ava;
-    Queens()
-    {
-        BoardSize = Ava.getsize();
-
-
+    //Constructor
+    Queens(){
+        //Board Ava;
+       // BoardSize = Ava.getsize();
     }
-    bool Availability(int board[])
+    //Destructor
+    ~Queens() {
+    }
+    //Modifiers
+    void setRow(int row) {
+        RowPos = row;
+    }
+    void setColumn(int col) {
+        ColPos = col;
+    }
+
+    //Getters
+    int getRow() {
+        return RowPos;
+    }
+    int getCol() {
+        return ColPos;
+    }
+
+    //functions
+    
+    /* bool Availability(int board[])
     {
         for (int i = 0; i < BoardSize; i++)
         {
@@ -83,12 +57,59 @@ public:
                 }
             }
         }
-
-
-    }
+    } */
 
 };
-
+class Board {
+private:
+    int boardSize;
+    char** board;
+    Queens queen;
+public:
+    //Constructors
+    Board() {
+        board = new char* [boardSize];
+        for (int i = 0; i < boardSize; i++)
+            board[i] = new char[boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++)
+                board[i][j] = '-';
+        }
+    }
+    Board(int boardSize) {
+        this->boardSize = boardSize;
+        board = new char* [boardSize];
+        for (int i = 0; i < boardSize; i++)
+            board[i] = new char[boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++)
+                board[i][j] = '-';
+        }
+    }
+    //Destructor
+    ~Board() {
+        for (int i = 0; i < boardSize; i++)
+            delete[] board[i];
+        delete[] board;
+    }
+    //Getters
+    int getsize()
+    {
+        return boardSize;
+    }
+    //Functions
+    void print_board() {
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                std::cout << board[i][j] << "|";
+            }
+            std::cout << "\n";
+        }
+    }
+    void input_queen(int row, int col) {
+        board[row][col] = 'Q';
+    }
+};
 
 //functions to check if the space is available or not
 //pass array of queens and their number and the position in the board =  a,b and size of the board = N
@@ -104,130 +125,114 @@ int main()
     cout << "Please enter size of board: ";
     cin >> N;
 
+    Queens queen;
     Board playing_board(N);
+
+    playing_board.input_queen(3, 3);
+    playing_board.input_queen(6, 6);
+
     playing_board.print_board();
 
-    /*  for (int i = 0; i < N; i++)
-    {
-        for (int j = 0; j < N; j++)
-        {
-            if ()
-        }
 
-    }
-    for (int i = 0; i < N; i++)
-    {
-        for (int j = 0; j < N; j++)
+    return 0;
 
-            cout << [i][j];
-    }
-
-    for (int i = 0; i < N; i++)
-        delete[] * (board + i);
-    delete[] board
-
-    return 0; */
 }
-
-
-
-
 
 bool checkSpaces(Queens* queens, int numQueens, int a, int b, int N) {
 
-	for (int k = 0; k < numQueens; k++) {
+    for (int k = 0; k < numQueens; k++) {
 
-		int x = queens[k].RowPos;
-		int y = queens[k].ColPos;
+        int x = queens[k].getRow();
+        int y = queens[k].getCol();
 
-		if (a == x || b == y) {
-			return false;
-		}
+        if (a == x || b == y) {
+            return false;
+        }
 
-		for (int i = 1; i < N + 1; i++) {
-			if (((x + i) < N) && ((y + i) < N)) {
-				if (((x + i) == a) && ((y + i) == b)) {
-					return false;
-				}
-			}
-			else
-				break;
-		}
+        for (int i = 1; i < N + 1; i++) {
+            if (((x + i) < N) && ((y + i) < N)) {
+                if (((x + i) == a) && ((y + i) == b)) {
+                    return false;
+                }
+            }
+            else
+                break;
+        }
 
-		for (int i = 1; i < N + 1; i++) {
-			if (((x - i) >= 0) && ((y - i) >= 0)) {
-				if (((x - i) == a) && ((y - i) == b)) {
-					return false;
-				}
-			}
-			else
-				break;
-		}
-
-
-		for (int i = 1; i < N + 1; i++) {
-			if (((x + i) < N) && ((y - i) >= 0)) {
-				if (((x + i) == a) && ((y - i) == b)) {
-					return false;
-				}
-			}
-			else
-				break;
-		}
+        for (int i = 1; i < N + 1; i++) {
+            if (((x - i) >= 0) && ((y - i) >= 0)) {
+                if (((x - i) == a) && ((y - i) == b)) {
+                    return false;
+                }
+            }
+            else
+                break;
+        }
 
 
-		for (int i = 1; i < N + 1; i++) {
-			if (((x - i) >= 0) && ((y + i) < N)) {
-				if (((x - i) == a) && ((y + i) == b)) {
-					return false;
-				}
-			}
-			else
-				break;
-		}
-	}
+        for (int i = 1; i < N + 1; i++) {
+            if (((x + i) < N) && ((y - i) >= 0)) {
+                if (((x + i) == a) && ((y - i) == b)) {
+                    return false;
+                }
+            }
+            else
+                break;
+        }
 
 
-	return true;
+        for (int i = 1; i < N + 1; i++) {
+            if (((x - i) >= 0) && ((y + i) < N)) {
+                if (((x - i) == a) && ((y + i) == b)) {
+                    return false;
+                }
+            }
+            else
+                break;
+        }
+    }
+
+
+    return true;
 }
 
 
 
 int findSpaces(int x, int y, int N) {
-	int spaces = 0;
-	spaces += (2 * N);
-	spaces--;
+    int spaces = 0;
+    spaces += (2 * N);
+    spaces--;
 
-	for (int i = 1; i < N + 1; i++) {
-		if (((x + i) < N) && ((y + i) < N))
-			spaces++;
-		else
-			break;
-	}
+    for (int i = 1; i < N + 1; i++) {
+        if (((x + i) < N) && ((y + i) < N))
+            spaces++;
+        else
+            break;
+    }
 
-	for (int i = 1; i < N + 1; i++) {
-		if (((x - i) >= 0) && ((y - i) >= 0))
-			spaces++;
-		else
-			break;
-	}
-
-
-	for (int i = 1; i < N + 1; i++) {
-		if (((x + i) < N) && ((y - i) >= 0))
-			spaces++;
-		else
-			break;
-	}
+    for (int i = 1; i < N + 1; i++) {
+        if (((x - i) >= 0) && ((y - i) >= 0))
+            spaces++;
+        else
+            break;
+    }
 
 
-	for (int i = 1; i < N + 1; i++) {
-		if (((x - i) >= 0) && ((y + i) < N))
-			spaces++;
-		else
-			break;
-	}
+    for (int i = 1; i < N + 1; i++) {
+        if (((x + i) < N) && ((y - i) >= 0))
+            spaces++;
+        else
+            break;
+    }
 
 
-	return spaces;
+    for (int i = 1; i < N + 1; i++) {
+        if (((x - i) >= 0) && ((y + i) < N))
+            spaces++;
+        else
+            break;
+    }
+
+
+    return spaces;
 }
