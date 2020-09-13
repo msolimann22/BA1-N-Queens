@@ -89,6 +89,15 @@ public:
 
 };
 
+
+//functions to check if the space is available or not
+//pass array of queens and their number and the position in the board =  a,b and size of the board = N
+bool checkSpaces(Queens* queens, int numQueens, int a, int b, int N);
+
+//function to check number of spaces that will be taken, pass position of queen = x,y and size of board N.
+int findSpaces(int x, int y, int N);
+
+
 int main()
 {
     int N;
@@ -120,3 +129,105 @@ int main()
     return 0; */
 }
 
+
+
+
+
+bool checkSpaces(Queens* queens, int numQueens, int a, int b, int N) {
+
+	for (int k = 0; k < numQueens; k++) {
+
+		int x = queens[k].RowPos;
+		int y = queens[k].ColPos;
+
+		if (a == x || b == y) {
+			return false;
+		}
+
+		for (int i = 1; i < N + 1; i++) {
+			if (((x + i) < N) && ((y + i) < N)) {
+				if (((x + i) == a) && ((y + i) == b)) {
+					return false;
+				}
+			}
+			else
+				break;
+		}
+
+		for (int i = 1; i < N + 1; i++) {
+			if (((x - i) >= 0) && ((y - i) >= 0)) {
+				if (((x - i) == a) && ((y - i) == b)) {
+					return false;
+				}
+			}
+			else
+				break;
+		}
+
+
+		for (int i = 1; i < N + 1; i++) {
+			if (((x + i) < N) && ((y - i) >= 0)) {
+				if (((x + i) == a) && ((y - i) == b)) {
+					return false;
+				}
+			}
+			else
+				break;
+		}
+
+
+		for (int i = 1; i < N + 1; i++) {
+			if (((x - i) >= 0) && ((y + i) < N)) {
+				if (((x - i) == a) && ((y + i) == b)) {
+					return false;
+				}
+			}
+			else
+				break;
+		}
+	}
+
+
+	return true;
+}
+
+
+
+int findSpaces(int x, int y, int N) {
+	int spaces = 0;
+	spaces += (2 * N);
+	spaces--;
+
+	for (int i = 1; i < N + 1; i++) {
+		if (((x + i) < N) && ((y + i) < N))
+			spaces++;
+		else
+			break;
+	}
+
+	for (int i = 1; i < N + 1; i++) {
+		if (((x - i) >= 0) && ((y - i) >= 0))
+			spaces++;
+		else
+			break;
+	}
+
+
+	for (int i = 1; i < N + 1; i++) {
+		if (((x + i) < N) && ((y - i) >= 0))
+			spaces++;
+		else
+			break;
+	}
+
+
+	for (int i = 1; i < N + 1; i++) {
+		if (((x - i) >= 0) && ((y + i) < N))
+			spaces++;
+		else
+			break;
+	}
+
+
+	return spaces;
+}
